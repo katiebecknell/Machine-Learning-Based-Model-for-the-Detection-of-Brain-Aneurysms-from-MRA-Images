@@ -6,9 +6,8 @@ How to run our code:
 
 1. Ensure that all data images are in the form of .jpg and are two folders: Positive (containing only images that have aneurysms present) and Negative (containing only images that do not have aneuyrsms present)
 2. After the images are renamed, move the files into one singluar dataset
-- First, create a directory called dataset
-                mkdir dataset/
-      b. Move the positive image files to the newly created dataset
-                python POSITIVE_file_move.py
-      c. Move the negative image files to the newly created dataset
-                python NEGATIVE_file_move.py
+- First, create a directory called dataset:   mkdir dataset/
+- Move the positive image files to the newly created dataset:   python POSITIVE_file_move.py
+- Move the negative image files to the newly created dataset:   python NEGATIVE_file_move.py
+3. Next, randomize all the image files in the dataset folder:   python randomizer.py
+4. Now the dataset is ready to be fed to the model. Depending on which model you wish to run use the following:     python ResNet50_FeatureExtraction.py
