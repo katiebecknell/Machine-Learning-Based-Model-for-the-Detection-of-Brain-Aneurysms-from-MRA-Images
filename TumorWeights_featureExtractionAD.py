@@ -210,12 +210,4 @@ print("Train Accuracy = ", scores_train[1])
 
 scores = model.evaluate(val_generator, steps = 10)
 print("Validation Accuracy =", scores[1])
-'''
-print("WITH NEW WEIGHTS")
-loaded_model = model.load_weights('cls_resnet_0.1.h5')
-loss, acc = loaded_model.evaluate(train_generator, steps = 10)
-print("Train Accuracy = ", acc)
-loss2, acc2 = loaded_model.evaluate(val_generator, steps = 10)
-print("Val Accuracy = ", acc2)
 
-'''
