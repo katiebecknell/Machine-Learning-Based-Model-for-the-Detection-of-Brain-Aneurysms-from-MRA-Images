@@ -6,75 +6,6 @@ import shutil
 import matplotlib.pyplot as plt
 from keras.preprocessing.image import ImageDataGenerator, load_img, img_to_array, array_to_img
 
-'''
-#LOCATING DATA
-
-#Need to change this from fetching data from google drive to data from our remote server
-import os
-
-os.chdir("/data/mraap/splitDataset")   # directory contains all the pictures sent as it is
-
-files = os.listdir("/data/mraap/splitDataset")
-print(len(files))       # 2125 images sent via the zip
-
-#CREATING AND SPLITTING TRAIN AND TEST SETS
-
-#Creating folder named "train" to store training set
-train = 'train'
-
-# Create target Directory if don't exist
-if not os.path.exists(train):
-  os.mkdir(train)
-  print("Directory " , train ,  " Created ")
-else:    
-  print("Directory " , train ,  " already exists")
-
-#Creating folder named "test" to store test set
-test = 'test'
-
-# Create target Directory if don't exist
-if not os.path.exists(test):
-  os.mkdir(test)
-  print("Directory " , test ,  " Created ")
-else:    
-  print("Directory " , test ,  " already exists")
-
-#Splitting data into "train" folder
-import random
-import shutil
-dir= os.listdir()
-cwd = os.getcwd()
-print(cwd)
-dir.sort()  # making sure that the filenames have a fixed order before shuffling
-random.seed(23)  # to maintain the result as it is no matter how many times the code is run
-random.shuffle(dir)  # shuffles the ordering of filenames
-
-for file in files[:296]:  
-  src = cwd + '/' + file
-  dest = cwd + '/' + 'train/'  + file
-  shutil.move(src, dest) 
-  
-# train ~ 85% of 2125
-# test ~ 15% of 2125
-
-#Checking the size of the train file
-os.chdir("/data/mraap/dataset/train")
-files = os.listdir()
-print(len(files)) 
-
-os.chdir("/data/mraap/dataset")
-
-#NEED TO WRITE CODE TO PLACE REMAINING FILES IN THE TEST FOLDER
-#The following commented code throws an error
-#dir= os.listdir()
-#cwd = os.getcwd()
-#print(cwd)
-#for file in files:  
-  #src = cwd + '/' + file
-  #dest = cwd + '/' + 'test/' + file
-  #shutil.move(src, dest) 
-  
-'''
 
 #EXTRACTING LABELS FROM FILENAMES
 
@@ -133,11 +64,7 @@ train = os.listdir()
 y_train = extract_labels(os.getcwd(), train)
 print(y_train.shape)
 print(y_train)
-
-# Saving np label arrays in disk for future use and fast loading
-
-#np.save("y_train.npy", y_train)      
-#np.save("y_test.npy", y_test)  
+ 
 
 #CONVERTING TRAIN AND TEST IMAGES INTO NUMPY ARRAYS
 
@@ -181,29 +108,18 @@ print(x_validation.shape)
 #Go to train directory
 os.chdir('/data/mraap/splitDataset/train')
 
-# saving array to load it faster in future
 
-#np.save("x_train.npy", x_train)      
-#np.save("x_test.npy", x_test) 
 
 #LOADING NUMPY ARRAYS FROM MEMORY
 os.chdir('//data/mraap/splitDataset/train')
 
 import numpy as np
 
-#x_train = np.load('x_train.npy')
-#x_test = np.load('x_test.npy')
-#y_train = np.load('y_train.npy')
-#y_test = np.load('y_test.npy')
-
 train_imgs_scaled = x_train.astype('float32')
 validation_imgs_scaled = y_train.astype('float32') 
 train_imgs_scaled /= 255 
 validation_imgs_scaled /= 255 
  
-# visualize a sample image 
-# print(train_imgs[0].shape) 
-# array_to_img(train_imgs[0])
 
 # encode text category labels 
 from sklearn.preprocessing import LabelEncoder 
@@ -310,12 +226,4 @@ print("Train Accuracy = ", scores_train[1])
 
 scores = model.evaluate(val_generator, steps = 10)
 print("Validation Accuracy =", scores[1])
-'''
-print("WITH NEW WEIGHTS")
-loaded_model = model.load_weights('cls_resnet_0.1.h5')
-loss, acc = loaded_model.evaluate(train_generator, steps = 10)
-print("Train Accuracy = ", acc)
-loss2, acc2 = loaded_model.evaluate(val_generator, steps = 10)
-print("Val Accuracy = ", acc2)
 
-'''
